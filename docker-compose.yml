@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  croni:
+    build: ./
+    image: atareao/croni:v1.1
+    container_name: croni
+    volumes:
+      - ./crontab:/crontab
+    env_file:
+      - croni.env
