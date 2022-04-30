@@ -25,14 +25,17 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   -- file explorer
+  --use 'kyazdani42/nvim-tree.lua'
   use {
-    'kyazdani42/nvim-tree.lua',
+      'nvim-neo-tree/neo-tree.nvim',
+      branch = "v2.x",
     requires = {
-      'kyazdani42/nvim-web-devicons', -- optional, for file icon
+      "nvim-lua/plenary.nvim",
+      "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim"
     },
-    config = function() require'nvim-tree'.setup {} end
   }
-  --use 'sidebar-nvim/sidebar.nvim'
+  use 'sidebar-nvim/sidebar.nvim'
 
   -- indent line
   use 'lukas-reineke/indent-blankline.nvim'
@@ -53,6 +56,8 @@ return require('packer').startup(function(use)
 
   -- treesitter interface
   use 'nvim-treesitter/nvim-treesitter'
+  use 'nvim-treesitter/nvim-tree-docs'
+  use 'p00f/nvim-ts-rainbow'
 
   -- colorschemes
   use 'Shatur/neovim-ayu'
@@ -61,13 +66,14 @@ return require('packer').startup(function(use)
   use { 'rose-pine/neovim', as = 'rose-pine' }
 
   -- LSP
-  use 'neovim/nvim-lspconfig'
-
-  -- LSP Installer
-  use {
-    'williamboman/nvim-lsp-installer',
-    requires = {'neovim/nvim-lspconfig'},
+ use 'neovim/nvim-lspconfig'
+ use {
+    'folke/trouble.nvim',
+    requires = {
+        'kyazdani42/nvim-web-devicons',
+    }
   }
+  use 'kkoomen/vim-doge'
 
   -- autocomplete
   use {
@@ -77,16 +83,30 @@ return require('packer').startup(function(use)
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-vsnip',
-      'hrsh7th/vim-vsnip-integ',
+      'f3fora/cmp-spell',
       'saadparwaiz1/cmp_luasnip',
     },
   }
+  use 'rafamadriz/friendly-snippets'
+  -- use {'tzachar/cmp-tabnine',
+  --      run='./install.sh',
+  --      requires = 'hrsh7th/nvim-cmp'
+  -- }
+  use {'onsails/lspkind-nvim'}
+
 
   -- statusline
+  -- use {
+  --   'nvim-lualine/lualine.nvim',
+  --   requires = { 'kyazdani42/nvim-web-devicons' , opt = true},
+  -- }
+  use ('Iron-E/nvim-highlite')
   use {
-    'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons' , opt = true},
+     'feline-nvim/feline.nvim',
+      requires = {
+        'gitsigns.nvim',
+        'nvim-web-devicons'
+    },
   }
 
   -- tabs
@@ -98,16 +118,16 @@ return require('packer').startup(function(use)
   -- fuzzy finder
   use 'nvim-lua/popup.nvim'
   use 'nvim-lua/plenary.nvim'
-  -- use 'nvim-telescope/telescope.nvim'
-  -- use 'nvim-telescope/telescope-ui-select.nvim'
-  -- use 'nvim-telescope/telescope-symbols.nvim'
-  -- use 'nvim-telescope/telescope-media-files.nvim'
-  -- use 'nvim-telescope/telescope-file-browser.nvim'
+  use 'nvim-telescope/telescope.nvim'
+  use 'nvim-telescope/telescope-ui-select.nvim'
+  use 'nvim-telescope/telescope-symbols.nvim'
+  use 'nvim-telescope/telescope-media-files.nvim'
+  use 'nvim-telescope/telescope-file-browser.nvim'
   use 'ibhagwan/fzf-lua'
 
   -- zettelkasten
-  -- use 'renerocksai/telekasten.nvim'
-  -- use 'renerocksai/calendar-vim'
+  use 'renerocksai/telekasten.nvim'
+  use 'renerocksai/calendar-vim'
 
   -- git labels
   use {
@@ -124,6 +144,9 @@ return require('packer').startup(function(use)
   use 'simrat39/rust-tools.nvim'
   use 'mfussenegger/nvim-dap'
   use 'rcarriga/nvim-dap-ui'
+
+  use 'norcalli/nvim-colorizer.lua'
+  require'colorizer'.setup()
 
   if packer_bootstrap then
     require('packer').sync()

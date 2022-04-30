@@ -97,7 +97,7 @@ https://github.com/typescript-language-server/typescript-language-server
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'bashls', 'pyright', 'clangd', 'html', 'tsserver'}
+local servers = { 'bashls', 'pyright', 'clangd', 'html'}--, 'tsserver'
 
 -- Set settings for language servers below
 --
@@ -117,8 +117,76 @@ for _, lsp in ipairs(servers) do
     }
   }
 end
+-- require "lspconfig".tsserver.setup {
+--     on_attach = function(client)
+--         if client.config.flags then
+--           client.config.flags.allow_incremental_sync = true
+--         end
+--         client.resolved_capabilities.document_formatting = false
+--         set_lsp_config(client)
+--     end
+-- }
 require "lspconfig".efm.setup {
     init_options = {documentFormatting = true},
+    settings = {
+        rootMarkers = {".git/"},
+        languages = {
+            javascript = {
+                lintCommand = "eslint_d -f unix --stdin --stdin-filename ${INPUT}",
+                lintStdin = true,
+                lintFormats = {
+                    "%f:%l:%c: %m"
+                },
+                lintIgnoreExitCode = true,
+                formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
+                formatStdin = true
+            },
+            sh = {
+                {LintCommand = "shellcheck -f gcc -x",
+                 LintFormats = {
+                     "%f:%l:%c: %trror: %m",
+                     "%f:%l:%c: %tarning: %m",
+                     "%f:%l:%c: %tote: %m"}
+                 }
+            },
+            dockerfile = {
+                {
+                    LintCommand = "hadolint --no-color",
+                    LintFormats = {
+                        "%f:%l %m",
+                    }
+                }
+            },
+            python = {
+                {
+                    LintCommand = "mypy --show-column-numbers",
+                    LintFormats = {
+                        "%f:%l:%c: %trror: %m",
+                        "%f:%l:%c: %tarning: %m",
+                        "%f:%l:%c: %tote: %m"
+                    }
+                },
+                {
+                    LintCommand = "flake8 --stdin-display-name ${INPUT} -",
+                    LintFormats = {
+                        "%f:%l:%c: %m"
+                    }
+                },
+                {
+                    LintCommand = "pylint --output-format text --score no --msg-template {path}:{line}:{column}:{C}:{msg} ${INPUT}",
+                    LintFormats = {
+                        "%f:%l:%c:%t:%m"
+                    }
+                },
+                {
+                    FormatCommand = "autopep8 -"
+                }
+                --{
+                --    FormatCommand = {"autopep8 -", FormatStdin = true}
+                --}
+            }
+        }
+    }
     --settings = {
     --    filetypes = {"python"},
     --    languages = {
@@ -130,20 +198,82 @@ require "lspconfig".intelephense.setup({
   settings = {
         intelephense = {
             stubs = {
+                "acf-pro",
+                "apache",
                 "bcmath",
                 "bz2",
                 "calendar",
+                "com_dotnet",
                 "Core",
+                "ctype",
                 "curl",
-                "zip",
-                "zlib",
+                "date",
+                "dba",
+                "dom",
+                "enchant",
+                "exif",
+                "FFI",
+                "fileinfo",
+                "filter",
+                "fpm",
+                "ftp",
+                "gd",
+                "gettext",
+                "gmp",
+                "hash",
+                "iconv",
+                "imap",
+                "intl",
                 "json",
+                "ldap",
+                "libxml",
+                "mbstring",
+                "meta",
+                "mysqli",
+                "oci8",
+                "odbc",
+                "openssl",
+                "pcntl",
+                "pcre",
+                "PDO",
+                "pdo_ibm",
+                "pdo_mysql",
+                "pdo_pgsql",
+                "pdo_sqlite",
+                "pgsql",
+                "Phar",
+                "polylang",
+                "posix",
+                "pspell",
+                "readline",
+                "Reflection",
+                "session",
+                "shmop",
+                "SimpleXML",
+                "snmp",
+                "soap",
+                "sockets",
+                "sodium",
+                "SPL",
+                "sqlite3",
+                "standard",
+                "superglobals",
+                "sysvmsg",
+                "sysvsem",
+                "sysvshm",
+                "tidy",
+                "tokenizer",
                 "wordpress",
-                "acf-pro",
                 "wordpress-globals",
                 "wp-cli",
-                "polylang",
-                "standard"
+                "xml",
+                "xmlreader",
+                "xmlrpc",
+                "xmlwriter",
+                "xsl",
+                "Zend OPcache",
+                "zip",
+                "zlib"
             },
             files = {
                 maxSize = 5000000;

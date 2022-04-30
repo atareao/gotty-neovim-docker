@@ -332,26 +332,26 @@ ls.snippets = {
 			condition = conds.line_begin,
 		}),
 		-- The last entry of args passed to the user-function is the surrounding snippet.
-		s(
-			{ trig = "a%d", regTrig = true },
-			f(function(_, snip)
-				return "Triggered with " .. snip.trigger .. "."
-			end, {})
-		),
+		-- s(
+		-- 	{ trig = "a%d", regTrig = true },
+		-- 	f(function(_, snip)
+		-- 		return "Triggered with " .. snip.trigger .. "."
+		-- 	end, {})
+		-- ),
 		-- It's possible to use capture-groups inside regex-triggers.
-		s(
-			{ trig = "b(%d)", regTrig = true },
-			f(function(_, snip)
-				return "Captured Text: " .. snip.captures[1] .. "."
-			end, {})
-		),
-		s({ trig = "c(%d+)", regTrig = true }, {
-			t("will only expand for even numbers"),
-		}, {
-			condition = function(line_to_cursor, matched_trigger, captures)
-				return tonumber(captures[1]) % 2 == 0
-			end,
-		}),
+		-- s(
+		-- 	{ trig = "b(%d)", regTrig = true },
+		-- 	f(function(_, snip)
+		-- 		return "Captured Text: " .. snip.captures[1] .. "."
+		-- 	end, {})
+		-- ),
+		-- s({ trig = "c(%d+)", regTrig = true }, {
+		-- 	t("will only expand for even numbers"),
+		-- }, {
+		-- 	condition = function(line_to_cursor, matched_trigger, captures)
+		-- 		return tonumber(captures[1]) % 2 == 0
+		-- 	end,
+		-- }),
 		-- Use a function to execute any shell command and print its text.
 		s("bash", f(bash, {}, "ls")),
 		-- Short version for applying String transformations using function nodes.
@@ -370,10 +370,10 @@ ls.snippets = {
 			-- Lambdas can also apply transforms USING the text of other nodes:
 			l(l._1:gsub("e", l._2), { 1, 2 }),
 		}),
-		s({ trig = "trafo(%d+)", regTrig = true }, {
-			-- env-variables and captures can also be used:
-			l(l.CAPTURE1:gsub("1", l.TM_FILENAME), {}),
-		}),
+		-- s({ trig = "trafo(%d+)", regTrig = true }, {
+		-- 	-- env-variables and captures can also be used:
+		-- 	l(l.CAPTURE1:gsub("1", l.TM_FILENAME), {}),
+		-- }),
 		-- Set store_selection_keys = "<Tab>" (for example) in your
 		-- luasnip.config.setup() call to access TM_SELECTED_TEXT. In
 		-- this case, select a URL, hit Tab, then expand this snippet.
@@ -446,15 +446,7 @@ ls.snippets = {
 			t({ "", "" }),
 			dl(3, l._1:gsub("\n", " linebreak ") .. l._2, { 1, 2 }),
 		}),
-        s("ic", {
-            t({"`"}), i(2),
-            t({""}), i(1),
-            t({"`"}), i(0),
-        }),
-        s("code", {
-            t({"```", ""}), i(1),
-            t({"```", ""}), i(0),
-        }),
+        s("tititi", t("Hola mundo")),
 	},
 	java = {
 		-- Very long example for a java class.
@@ -501,12 +493,21 @@ ls.snippets = {
 			t({ "", "\\end{itemize}" }),
 		}),
 	},
-    md = {
+    markdown = {
         s("trigger", t("Hola mundo")),
         s("lor", sn(1, {
  	        t("basically just text "),
  	        i(1, "And an insertNode.")
         })),
+        s("ic", {
+            t({"`"}), i(2),
+            t({""}), i(1),
+            t({"`"}), i(0),
+        }),
+        s("code", {
+            t({"```", ""}), i(1),
+            t({"```", ""}), i(0),
+        }),
     },
 }
 
